@@ -57,4 +57,26 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateAddress(Request $request): View
+    {   
+        $user = Auth::user();
+        $cep = session()->get('cep');
+
+        $request->validate([
+            'street' => 'required|string|max:255',
+            'neighbourhood' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'uf' => 'required|string|max:255',
+        ]);
+
+        $user->street = $request->input('street');
+        $user->neighbourhood = $request->input('neighbourhood');
+        $user->city = $request->input('city');
+        $user->uf = $request->input('uf');
+        $user->cep = $cep;
+        $user->save();
+
+        return view('dashboard')->with('success', 'Endereço atualizado com sucesso!');
+    }
 }

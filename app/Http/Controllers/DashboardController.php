@@ -17,6 +17,7 @@ class DashboardController extends Controller
         $cep = $request->input('cep');
         $url = "https://viacep.com.br/ws/{$cep}/json/";
         $addressData = json_decode(file_get_contents($url));
+        session()->flash('cep', $cep);
 
         return view('dashboard', ['address' => $addressData]);
     }
