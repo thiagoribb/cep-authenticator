@@ -76,7 +76,26 @@ class ProfileController extends Controller
         $user->uf = $request->input('uf');
         $user->cep = $cep;
         $user->save();
+        session()->flash('successAddress', 'Endereço alterado com sucesso.');
 
         return view('dashboard')->with('success', 'Endereço atualizado com sucesso!');
+    }
+
+    public function updatePhoto(Request $request): View
+    {   
+        if ($request->hasFile('profile_photo')) {
+            $file = $request->file('profile_photo');
+            
+            if ($file->isValid() && in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
+                $photoBinary = file_get_contents($file->getRealPath());
+
+                $user = Auth::user();
+                $user->profile_photo = base64_encode($photoBinary);
+                $user->save();
+                session()->flash('successPhoto', 'Foto alterada com sucesso.');
+            }
+        }
+        
+        return view('dashboard');
     }
 }
