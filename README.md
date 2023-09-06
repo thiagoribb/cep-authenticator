@@ -6,7 +6,7 @@ Acessar o mysql e rodar:
 
 `create database nome_do_banco`
 
-Copiar .env.example e colar como env. Atualizar as variáveis do banco de dados:
+Copiar o .env.example e colar como .env. Depois disso, atualizar as variáveis do banco de dados:
 
 DB_DATABASE=nome_do_banco
 DB_USERNAME=root
